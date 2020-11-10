@@ -11,7 +11,7 @@ const MapContainer = styled(Map)`
     height: 100vh;
     position:absolute;
     top:0px;
-    left:300px;
+    left:400px;
 `;
 
 
@@ -31,7 +31,7 @@ function App() {
 
   useEffect(function fetchObservationLocations() {
     const connection = new Metolib.WfsConnection();
-    if (connection.connect('http://opendata.fmi.fi/wfs', 'fmi::observations::weather::cities::multipointcoverage')) {
+    if (connection.connect('https://opendata.fmi.fi/wfs', 'fmi::observations::weather::cities::multipointcoverage')) {
       connection.getData({
         begin: Date.now() - 60e3 * 60 * 24 * 6,
         end: Date.now(),
@@ -49,7 +49,7 @@ function App() {
 
           setObservationLocations(data.locations
             .map(loc => {
-              const [lon, lat] = loc.info.position.map(parseFloat);
+              const [lat, lon] = loc.info.position.map(parseFloat);
               return {...loc, position: {lat, lon}}
             })
           );

@@ -1,17 +1,21 @@
 import React from 'react';
 import styled from "styled-components";
-import getSelectedLocatoinId from './locationGetter';
 
 function Sidebar({selectedLocationId, observationLocations}) {
-    const id = getSelectedLocatoinId(selectedLocationId);
-
-    const loc = observationLocations.find(loc => loc.info.id === id);
-    return <div>
-        <pre>{loc && JSON.stringify(loc.info, null, 4)}</pre>
+    const loc = observationLocations.find(loc => loc.info.id === selectedLocationId);	
+	var tableOfData;
+    if (!loc){
+    	tableOfData = <p className="centered">Select a location to continue.</p>
+    }
+    return <div className="sidebar">
+    	<h1 className="centered">Weather</h1>
+    	<pre >{tableOfData}</pre>
+    	<pre className="scrollable">{loc && JSON.stringify(loc.info, null, 4)}{loc && JSON.stringify(loc.data, null, 4)}</pre>
     </div>
 }
 
 export default styled(Sidebar)`
-    width: 300px;
     height: 100vh;
+	width: 400px;
+
 `;
